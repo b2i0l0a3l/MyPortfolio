@@ -1,26 +1,116 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   Design System - CSS Custom Properties
+   Dark/Light theme tokens + Tailwind integration
+   ============================================================ */
+
+/* ---------- Dark Theme (default) ---------- */
+:root,
+.dark {
+  --background: #000000;
+  --surface: #0a0a0a;
+  --surface-alt: #111111;
+  --card: #0e0e0e;
+  --primary: #ffffff;
+  --secondary: #9ca3af;
+  --accent: #a855f7;
+  --accent-hover: #c084fc;
+  --cursor-color: #ffffff;
+  --border: rgba(255, 255, 255, 0.06);
 }
 
+/* ---------- Light Theme ---------- */
+.light {
+  --background: #fafafa;
+  --surface: #ffffff;
+  --surface-alt: #f3f4f6;
+  --card: #ffffff;
+  --primary: #0a0a0a;
+  --secondary: #6b7280;
+  --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+  --cursor-color: #ffffff; /* Use white so mixBlendMode 'difference' creates black cursor on white bg */
+  --border: rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- Tailwind Theme Tokens ---------- */
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-card: var(--card);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-cursor-color: var(--cursor-color);
+  --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ============================================================
+   Base Styles
+   ============================================================ */
+
+* {
+  cursor: none !important;
+}
+
+@media (pointer: coarse) {
+  * {
+    cursor: auto !important;
   }
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--primary);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   Selection & Scrollbar
+   ============================================================ */
+
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-hover);
+}
+
+/* ============================================================
+   Smooth transitions for theme switching
+   ============================================================ */
+
+h1, h2, h3, h4, h5, h6,
+p, span, a, li, label, input, textarea, button,
+section, div, header, footer, nav, main, article {
+  transition: color 0.4s ease, background-color 0.4s ease,
+    border-color 0.4s ease;
 }
