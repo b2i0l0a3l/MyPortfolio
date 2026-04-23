@@ -25,10 +25,10 @@ export interface Skill {
 
 export const NAV_LINKS = [
   { label: "Home", href: "#hero" },
-  { label: "Projects", href: "#projects" },
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
-  { label: "Contact", href: "#contact" },
+  { label: "Projects", href: "#projects" },
+  { label: "Contact Me", href: "#contact" },
 ] as const;
 
 export const HERO_DATA = {

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { motion } from "framer-motion";
 import { CONTACT_DATA } from "@/lib/data";
 import SectionTitle from "@/components/ui/SectionTitle";
 import Button from "@/components/ui/Button";
@@ -19,7 +18,6 @@ export default function Contact() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     
-    // Construct mailto link with form data
     const subject = encodeURIComponent(`Portfolio Contact from ${formState.name}`);
     const body = encodeURIComponent(`Name: ${formState.name}\nEmail: ${formState.email}\n\nMessage:\n${formState.message}`);
     window.location.href = `mailto:${CONTACT_DATA.email}?subject=${subject}&body=${body}`;
@@ -36,73 +34,42 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24">
           <div>
-            <motion.h2
-              className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
               {CONTACT_DATA.headline}
               <span className="text-accent">.</span>
-            </motion.h2>
+            </h2>
 
-            <motion.p
-              className="text-secondary text-base md:text-lg leading-relaxed mb-10"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
+            <p className="text-secondary text-base md:text-lg leading-relaxed mb-10">
               {CONTACT_DATA.description}
-            </motion.p>
+            </p>
 
             {/* Email */}
-            <motion.a
+            <a
               href={`mailto:${CONTACT_DATA.email}`}
               className="inline-flex items-center gap-3 text-accent hover:text-accent-hover transition-colors group mb-12"
-              data-cursor-hover
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
             >
               <Mail size={18} />
               <span className="text-base md:text-lg font-medium border-b border-accent/30 group-hover:border-accent transition-colors">
                 {CONTACT_DATA.email}
               </span>
-            </motion.a>
+            </a>
 
-            <motion.div
-              className="flex flex-wrap gap-3"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
+            <div className="flex flex-wrap gap-3">
               {CONTACT_DATA.socials.map((social) => (
                 <a
                   key={social.name}
                   href={social.url}
                   className="inline-flex items-center gap-2 px-4 py-2 text-sm text-secondary hover:text-accent border border-white/10 hover:border-accent/30 rounded-full transition-all duration-300"
-                  data-cursor-hover
                 >
                   {social.name}
                   <ArrowUpRight size={12} />
                 </a>
               ))}
-            </motion.div>
+            </div>
           </div>
 
           {/* Right: Form */}
-          <motion.form
-            onSubmit={handleSubmit}
-            className="space-y-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-          >
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name */}
             <div className="group">
               <label
@@ -169,13 +136,9 @@ export default function Contact() {
             {/* Submit */}
             <div className="pt-4">
               {submitted ? (
-                <motion.p
-                  className="text-accent font-medium"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
+                <p className="text-accent font-medium animate-fade-in-up">
                   ✓ Message sent successfully!
-                </motion.p>
+                </p>
               ) : (
                 <Button type="submit" size="lg">
                   Send Message
@@ -183,17 +146,11 @@ export default function Contact() {
                 </Button>
               )}
             </div>
-          </motion.form>
+          </form>
         </div>
 
         {/* Footer CTA */}
-        <motion.div
-          className="mt-24 md:mt-32 pt-12 border-t border-white/5 text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
+        <div className="mt-24 md:mt-32 pt-12 border-t border-white/5 text-center">
           <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 tracking-tight">
             READY TO BUILD SOMETHING
             <br />
@@ -205,7 +162,7 @@ export default function Contact() {
           <p className="text-secondary/40 text-xs mt-10 tracking-wider">
             © {new Date().getFullYear()} Portfolio. All rights reserved.
           </p>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

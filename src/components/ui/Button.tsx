@@ -1,10 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-
 // ============================================================
-// Button - Reusable button with pill shape and hover animation
-// Single Responsibility: Only renders styled buttons
+// Button - Reusable button with pill shape (CSS only, no framer-motion)
 // ============================================================
 
 interface ButtonProps {
@@ -44,37 +41,21 @@ export default function Button({
     inline-flex items-center justify-center gap-2
     rounded-full font-medium tracking-wide
     transition-all duration-300 ease-out
+    hover:scale-[1.03] hover:-translate-y-[1px] active:scale-[0.97]
     ${variants[variant]} ${sizes[size]} ${className}
   `.trim();
 
-  const motionProps = {
-    whileHover: { scale: 1.03, y: -1 },
-    whileTap: { scale: 0.97 },
-    transition: { duration: 0.2 },
-  };
-
   if (href) {
     return (
-      <motion.a
-        href={href}
-        className={baseStyle}
-        data-cursor-hover
-        {...motionProps}
-      >
+      <a href={href} className={baseStyle}>
         {children}
-      </motion.a>
+      </a>
     );
   }
 
   return (
-    <motion.button
-      type={type}
-      onClick={onClick}
-      className={baseStyle}
-      data-cursor-hover
-      {...motionProps}
-    >
+    <button type={type} onClick={onClick} className={baseStyle}>
       {children}
-    </motion.button>
+    </button>
   );
 }

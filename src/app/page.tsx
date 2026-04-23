@@ -1,7 +1,6 @@
 "use client";
 
 import { ThemeProvider } from "@/context/ThemeContext";
-import CustomCursor from "@/components/ui/CustomCursor";
 import Header from "@/components/Header";
 import LazySection from "@/components/ui/LazySection";
 import Hero from "@/components/sections/Hero";
@@ -16,7 +15,6 @@ const Contact = dynamic(() => import("@/components/sections/Contact"));
 export default function Home() {
   return (
     <ThemeProvider>
-      <CustomCursor />
       <Header />
 
       <main>

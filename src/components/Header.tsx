@@ -6,11 +6,6 @@ import { useTheme } from "@/context/ThemeContext";
 import { NAV_LINKS, HERO_DATA } from "@/lib/data";
 import { Sun, Moon, Menu, X } from "lucide-react";
 
-// ============================================================
-// Header - Navigation bar with smooth scroll, theme toggle,
-// and mobile hamburger menu.
-// Single Responsibility: Only handles navigation & theme switch
-// ============================================================
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
@@ -18,12 +13,10 @@ export default function Header() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
 
-  // Scroll detection
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      // Active section detection - MUST be in exact DOM order!
       const pageOrder = ["hero", "about", "skills", "projects", "contact"];
       for (let i = pageOrder.length - 1; i >= 0; i--) {
         const el = document.getElementById(pageOrder[i]);
@@ -38,6 +31,17 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isMobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileOpen]);
+
   const scrollTo = useCallback(
     (href: string) => {
       const id = href.replace("#", "");
@@ -51,18 +55,19 @@ export default function Header() {
   );
 
   return (
-    <motion.header
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+    <>
+      <motion.header
+      className={`fixed top-0 left-0 right-0 z-100 transition-all duration-500 ${
         isScrolled
-          ? "py-3 bg-surface/80 backdrop-blur-xl border-b border-white/5"
+          ? "py-3 backdrop-blur-md border-b border-border"
           : "py-5 bg-transparent"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
+      style={isScrolled ? { backgroundColor: 'color-mix(in srgb, var(--background) 80%, transparent)' } : undefined}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
-        {/* Logo */}
         <motion.a
           href="#hero"
           onClick={(e) => {
@@ -124,14 +129,16 @@ export default function Header() {
           >
             {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
-        </div>
+          </div>
       </div>
+    </motion.header>
 
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div
-            className="md:hidden fixed inset-0 top-[56px] bg-surface/95 backdrop-blur-2xl z-[99]"
+            className="md:hidden fixed inset-0 top-0 pt-20 backdrop-blur-md z-[99]"
+            style={{ backgroundColor: 'color-mix(in srgb, var(--background) 95%, transparent)' }}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -162,6 +169,6 @@ export default function Header() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   );
 }

@@ -1,28 +1,22 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { memo } from "react";
 import Image from "next/image";
 import { PROJECTS } from "@/lib/data";
 import SectionTitle from "@/components/ui/SectionTitle";
 import type { Project } from "@/lib/data";
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+// ============================================================
+// ProjectCard - Uses CSS animations instead of framer-motion
+// ============================================================
+
+const ProjectCard = memo(function ProjectCard({ project }: { project: Project }) {
   return (
-    <motion.a
+    <a
       href={project.demo || project.link}
       target="_blank"
       rel="noopener noreferrer"
-      className="block group relative overflow-hidden rounded-2xl bg-card border border-white/5 cursor-pointer"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{
-        duration: 0.6,
-        delay: index * 0.15,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      }}
-      whileHover={{ y: -8 }}
-      data-cursor-hover
+      className="block group relative overflow-hidden rounded-2xl bg-card border border-white/5 hover:-translate-y-2 transition-transform duration-500"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-surface-alt">
         <Image
@@ -45,10 +39,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </span>
 
         {/* View arrow on hover */}
-        <motion.div
-          className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-accent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
-          whileHover={{ scale: 1.1 }}
-        >
+        <div className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-accent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
           <svg
             width="16"
             height="16"
@@ -64,7 +55,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               strokeLinejoin="round"
             />
           </svg>
-        </motion.div>
+        </div>
       </div>
 
       {/* Content */}
@@ -79,9 +70,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {project.description}
         </p>
       </div>
-    </motion.a>
+    </a>
   );
-}
+});
 
 
 export default function Projects() {
@@ -91,21 +82,15 @@ export default function Projects() {
         <SectionTitle number="02" title="Selected Work" />
 
         {/* Section headline */}
-        <motion.h2
-          className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-16 md:mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
+        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-16 md:mb-20">
           DIGITAL
           <br />
           ARTIFACTS<span className="text-accent">.</span>
-        </motion.h2>
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          {PROJECTS.map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} />
+          {PROJECTS.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
       </div>

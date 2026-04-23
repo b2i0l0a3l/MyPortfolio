@@ -1,47 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { HERO_DATA } from "@/lib/data";
+import { HERO_DATA, CONTACT_DATA } from "@/lib/data";
 import Button from "@/components/ui/Button";
 import { ArrowDown } from "lucide-react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 // ============================================================
-// Hero Section - Full-screen landing with animated headline
-// Single Responsibility: Only renders the hero/landing area
+// Hero Section - Full-screen landing with CSS-only animations
+// Replaced framer-motion with CSS @keyframes for performance
 // ============================================================
-
-const letterVariants = {
-  hidden: { opacity: 0, y: 80 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.5 + i * 0.04,
-      duration: 0.6,
-      ease: [0.25, 0.46, 0.45, 0.94] as const,
-    },
-  }),
-};
-
-function AnimatedLine({ text, lineIndex }: { text: string; lineIndex: number }) {
-  return (
-    <span className="block overflow-hidden">
-      {text.split("").map((char, i) => (
-        <motion.span
-          key={`${lineIndex}-${i}`}
-          className="inline-block"
-          custom={lineIndex * 10 + i}
-          variants={letterVariants}
-          initial="hidden"
-          animate="visible"
-          style={{ whiteSpace: char === " " ? "pre" : undefined }}
-        >
-          {char}
-        </motion.span>
-      ))}
-    </span>
-  );
-}
 
 export default function Hero() {
   const lines = HERO_DATA.title.split("\n");
@@ -52,68 +19,88 @@ export default function Hero() {
       className="relative min-h-screen flex flex-col justify-center pt-28 pb-10 px-6 md:px-10 lg:px-20 overflow-hidden"
     >
       {/* Background gradient */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-accent/5 blur-[120px]" />
-        <div className="absolute bottom-1/4 -left-1/4 w-[400px] h-[400px] rounded-full bg-accent/3 blur-[100px]" />
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/4 -right-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full bg-accent/10 md:bg-accent/5 blur-[60px] md:blur-[120px]" />
+        <div className="absolute bottom-1/4 -left-1/4 w-[200px] md:w-[400px] h-[200px] md:h-[400px] rounded-full bg-accent/5 md:bg-accent/3 blur-[50px] md:blur-[100px]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto w-full">
         
         {/* Greeting */}
-        <motion.p
-          className="text-accent font-mono text-sm md:text-base tracking-wider mb-4 md:mb-6 uppercase"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+        <p
+          className="text-accent font-mono text-sm md:text-base tracking-wider mb-4 md:mb-6 uppercase animate-fade-in-left"
+          style={{ animationDelay: "0.2s" }}
         >
           {HERO_DATA.greeting} {HERO_DATA.name}
-        </motion.p>
+        </p>
 
-        {/* Main Title */}
+        {/* Main Title - word-by-word CSS animation instead of letter-by-letter motion.span */}
         <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight leading-[0.9] mb-8 md:mb-10">
-          {lines.map((line, i) => (
-            <AnimatedLine key={i} text={line} lineIndex={i} />
+          {lines.map((line, lineIdx) => (
+            <span key={lineIdx} className="block overflow-hidden">
+              {line.split(" ").map((word, wordIdx) => (
+                <span
+                  key={`${lineIdx}-${wordIdx}`}
+                  className="inline-block animate-slide-up"
+                  style={{
+                    animationDelay: `${0.5 + (lineIdx * 3 + wordIdx) * 0.12}s`,
+                  }}
+                >
+                  {word}&nbsp;
+                </span>
+              ))}
+            </span>
           ))}
         </h1>
 
         {/* Subtitle */}
-        <motion.p
-          className="text-secondary text-base md:text-lg lg:text-xl max-w-xl leading-relaxed mb-10 md:mb-12"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.2 }}
+        <p
+          className="text-secondary text-base md:text-lg lg:text-xl max-w-xl leading-relaxed mb-10 md:mb-12 animate-fade-in-up"
+          style={{ animationDelay: "1.2s" }}
         >
           {HERO_DATA.subtitle}
-        </motion.p>
+        </p>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.5 }}
+        {/* CTA and Socials */}
+        <div
+          className="flex flex-col sm:flex-row items-start sm:items-center gap-6 animate-fade-in-up"
+          style={{ animationDelay: "1.5s" }}
         >
           <Button href="#projects" size="lg">
             {HERO_DATA.cta}
             <ArrowDown size={16} />
           </Button>
-        </motion.div>
+
+          {/* Social Icons */}
+          <div className="flex items-center gap-4">
+            {CONTACT_DATA.socials.map((social) => {
+              const Icon = social.name === "GitHub" ? FaGithub : FaLinkedin;
+              return (
+                <a
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-full border border-white/10 text-secondary hover:text-primary hover:border-accent/50 hover:bg-white/5 transition-all duration-300"
+                  aria-label={social.name}
+                >
+                  <Icon size={20} />
+                </a>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
+      {/* Scroll indicator - CSS only */}
+      <div
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-fade-in-up"
+        style={{ animationDelay: "2s" }}
       >
-        <motion.div
-          className="w-5 h-9 rounded-full border border-secondary/30 flex justify-center pt-2"
-          animate={{ y: [0, 5, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-        >
+        <div className="w-5 h-9 rounded-full border border-secondary/30 flex justify-center pt-2 animate-bounce-slow">
           <div className="w-1 h-2 rounded-full bg-accent/60" />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

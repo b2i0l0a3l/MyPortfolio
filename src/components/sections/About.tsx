@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ABOUT_DATA, SKILLS } from "@/lib/data";
 import SectionTitle from "@/components/ui/SectionTitle";
 import {
@@ -27,63 +26,30 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 };
 
 // ============================================================
-// StatCard - Displays a single statistic
-// Single Responsibility: Only renders one stat
+// About Section - Bio, stats, and skills (CSS only animations)
 // ============================================================
 
-function StatCard({
-  value,
-  label,
-  index,
-}: {
-  value: string;
-  label: string;
-  index: number;
-}) {
+function StatCard({ value, label }: { value: string; label: string }) {
   return (
-    <motion.div
-      className="text-center p-6 rounded-2xl bg-card border border-white/5"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-    >
+    <div className="text-center p-6 rounded-2xl bg-card border border-white/5">
       <span className="block text-3xl md:text-4xl font-bold text-accent mb-1">
         {value}
       </span>
       <span className="text-xs text-secondary uppercase tracking-[0.2em]">
         {label}
       </span>
-    </motion.div>
+    </div>
   );
 }
 
-function SkillBadge({
-  skill,
-  index,
-}: {
-  skill: (typeof SKILLS)[0];
-  index: number;
-}) {
+function SkillBadge({ skill }: { skill: (typeof SKILLS)[0] }) {
   return (
-    <motion.div
-      className="flex items-center gap-3 px-4 py-3 rounded-xl bg-card border border-white/5 hover:border-accent/30 hover:bg-accent/5 transition-all duration-300"
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.08 }}
-      data-cursor-hover
-    >
+    <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-card border border-white/5 hover:border-accent/30 hover:bg-accent/5 transition-all duration-300">
       <span className="text-accent">{ICON_MAP[skill.icon]}</span>
       <span className="text-sm text-primary font-medium">{skill.name}</span>
-    </motion.div>
+    </div>
   );
 }
-
-// ============================================================
-// About Section - Bio, stats, timeline, and skills
-// Single Responsibility: Only renders the about section layout
-// ============================================================
 
 export default function About() {
   return (
@@ -92,13 +58,7 @@ export default function About() {
         <SectionTitle number="01" title="About Me" />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 mb-20">
-          <motion.h2
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
             {ABOUT_DATA.headline.split(" ").map((word, i) =>
               word === "Digital" || word === "Technical" ? (
                 <span key={i} className="text-accent">
@@ -108,22 +68,16 @@ export default function About() {
                 <span key={i}>{word} </span>
               )
             )}
-          </motion.h2>
+          </h2>
 
-          <motion.p
-            className="text-secondary text-base md:text-lg leading-relaxed self-end"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-          >
+          <p className="text-secondary text-base md:text-lg leading-relaxed self-end">
             {ABOUT_DATA.description}
-          </motion.p>
+          </p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-20">
-          {ABOUT_DATA.stats.map((stat, i) => (
-            <StatCard key={stat.label} value={stat.value} label={stat.label} index={i} />
+          {ABOUT_DATA.stats.map((stat) => (
+            <StatCard key={stat.label} value={stat.value} label={stat.label} />
           ))}
         </div>
 
@@ -132,8 +86,8 @@ export default function About() {
               Core Competencies
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
-              {SKILLS.map((skill, i) => (
-                <SkillBadge key={skill.name} skill={skill} index={i} />
+              {SKILLS.map((skill) => (
+                <SkillBadge key={skill.name} skill={skill} />
               ))}
             </div>
           </div>

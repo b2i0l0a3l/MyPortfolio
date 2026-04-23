@@ -54,16 +54,6 @@
    Base Styles
    ============================================================ */
 
-* {
-  cursor: none !important;
-}
-
-@media (pointer: coarse) {
-  * {
-    cursor: auto !important;
-  }
-}
-
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
@@ -74,13 +64,8 @@ body {
   background: var(--background);
   color: var(--primary);
   font-family: var(--font-sans), system-ui, sans-serif;
-  transition: background-color 0.5s ease, color 0.5s ease;
   overflow-x: hidden;
 }
-
-/* ============================================================
-   Selection & Scrollbar
-   ============================================================ */
 
 ::selection {
   background: var(--accent);
@@ -105,12 +90,67 @@ body {
 }
 
 /* ============================================================
-   Smooth transitions for theme switching
+   GPU-Composited CSS Animations (replace framer-motion)
+   Only animate transform & opacity for best performance
    ============================================================ */
 
-h1, h2, h3, h4, h5, h6,
-p, span, a, li, label, input, textarea, button,
-section, div, header, footer, nav, main, article {
-  transition: color 0.4s ease, background-color 0.4s ease,
-    border-color 0.4s ease;
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fade-in-up 0.7s ease-out forwards;
+}
+
+.animate-fade-in-left {
+  opacity: 0;
+  animation: fade-in-left 0.6s ease-out forwards;
+}
+
+.animate-slide-up {
+  opacity: 0;
+  animation: slide-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
 }
