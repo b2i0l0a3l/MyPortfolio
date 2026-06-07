@@ -1,9 +1,5 @@
 "use client";
 
-// ============================================================
-// LazySection - Simple wrapper with section id (no framer-motion)
-// Intersection Observer animations handled by CSS
-// ============================================================
 
 interface LazySectionProps {
   children: React.ReactNode;

@@ -1,40 +1,47 @@
 "use client";
 
-import { ThemeProvider } from "@/context/ThemeContext";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import Header from "@/components/Header";
-import LazySection from "@/components/ui/LazySection";
 import Hero from "@/components/sections/Hero";
-import dynamic from 'next/dynamic';
-
-const Projects = dynamic(() => import("@/components/sections/Projects"));
-const About = dynamic(() => import("@/components/sections/About"));
-const Skills = dynamic(() => import("@/components/sections/Skills"));
-const Contact = dynamic(() => import("@/components/sections/Contact"));
-
+import About from "@/components/sections/About";
+import Skills from "@/components/sections/Skills";
+import Projects from "@/components/sections/Projects";
+import Certificates from "@/components/sections/Certificates";
+import Contact from "@/components/sections/Contact";
+import ChatWidget from "@/components/chat/ChatWidget";
 
 export default function Home() {
   return (
     <ThemeProvider>
-      <Header />
+      <div className="relative min-h-screen bg-background text-foreground selection:bg-accent selection:text-accent-foreground">
+        <Header />
 
-      <main>
-        <Hero />
+        <main className="relative z-10">
+          <Hero />
+          
+          <div id="about">
+            <About />
+          </div>
+          
+          <div id="skills">
+            <Skills />
+          </div>
+          
+          <div id="projects">
+            <Projects />
+          </div>
+          
+          <div id="certificates">
+            <Certificates />
+          </div>
 
-        <LazySection id="about">
-          <About />
-        </LazySection>
+          <div id="contact">
+            <Contact />
+          </div>
+        </main>
 
-        <LazySection id="skills">
-          <Skills />
-        </LazySection>
-        <LazySection id="projects">
-          <Projects />
-        </LazySection>
-
-        <LazySection id="contact">
-          <Contact />
-        </LazySection>
-      </main>
+        <ChatWidget />
+      </div>
     </ThemeProvider>
   );
 }

@@ -2,10 +2,22 @@
 
 import { memo } from "react";
 import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import { HERO_DATA, CONTACT_DATA } from "@/lib/data";
-import Button from "@/components/ui/Button";
+import { useTheme } from "@/components/providers/ThemeProvider";
+import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+const ParticleField = dynamic(
+  () => import("@/components/three/ParticleField"),
+  { ssr: false }
+);
 
 const letterVariants = {
   hidden: { opacity: 0, y: 80 },
@@ -47,6 +59,7 @@ const AnimatedLine = memo(function AnimatedLine({
 });
 
 export default function Hero() {
+  const { theme } = useTheme();
   const lines = HERO_DATA.title.split("\n");
 
   return (
@@ -54,14 +67,13 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex flex-col justify-center pt-28 pb-10 px-6 md:px-10 lg:px-20 overflow-hidden"
     >
-      {/* Background gradient */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-accent/5 blur-[120px]" />
-        <div className="absolute bottom-1/4 -left-1/4 w-[400px] h-[400px] rounded-full bg-accent/3 blur-[100px]" />
+      <ParticleField isDark={theme === "dark"} />
+
+      <div className="absolute inset-0 z-[1] pointer-events-none">
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto w-full">
-        {/* Greeting */}
         <motion.p
           className="text-accent font-mono text-sm md:text-base tracking-wider mb-4 md:mb-6 uppercase"
           initial={{ opacity: 0, x: -20 }}
@@ -71,16 +83,14 @@ export default function Hero() {
           {HERO_DATA.greeting} {HERO_DATA.name}
         </motion.p>
 
-        {/* Main Title */}
         <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight leading-[0.9] mb-8 md:mb-10">
           {lines.map((line, i) => (
             <AnimatedLine key={i} text={line} lineIndex={i} />
           ))}
         </h1>
 
-        {/* Subtitle */}
         <motion.p
-          className="text-secondary text-base md:text-lg lg:text-xl max-w-xl leading-relaxed mb-10 md:mb-12"
+          className="text-muted-foreground text-base md:text-lg lg:text-xl max-w-xl leading-relaxed mb-10 md:mb-12"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.2 }}
@@ -88,33 +98,45 @@ export default function Hero() {
           {HERO_DATA.subtitle}
         </motion.p>
 
-        {/* CTA and Socials */}
         <motion.div
           className="flex flex-col sm:flex-row items-start sm:items-center gap-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.5 }}
         >
-          <Button href="#projects" size="lg">
+          <Button
+            size="lg"
+            className="rounded-full px-8 py-5 bg-accent text-accent-foreground hover:bg-accent-hover shadow-lg shadow-accent/20 gap-2 text-base"
+            onClick={() =>
+              document
+                .getElementById("projects")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+          >
             {HERO_DATA.cta}
             <ArrowDown size={16} />
           </Button>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             {CONTACT_DATA.socials.map((social) => {
               const Icon = social.name === "GitHub" ? FaGithub : FaLinkedin;
               return (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-full border border-white/10 text-secondary hover:text-primary hover:border-accent/50 hover:bg-white/5 transition-all duration-300"
-                  aria-label={social.name}
-                  data-cursor-hover
-                >
-                  <Icon size={20} />
-                </a>
+                <Tooltip key={social.name}>
+                  <TooltipTrigger
+                    render={
+                      <a
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-3 rounded-full border border-border text-muted-foreground hover:text-foreground hover:border-accent/50 hover:bg-accent/5 transition-all duration-300"
+                        aria-label={social.name}
+                      >
+                        <Icon size={20} />
+                      </a>
+                    }
+                  />
+                  <TooltipContent>{social.name}</TooltipContent>
+                </Tooltip>
               );
             })}
           </div>
@@ -123,13 +145,13 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
       >
         <motion.div
-          className="w-5 h-9 rounded-full border border-secondary/30 flex justify-center pt-2"
+          className="w-5 h-9 rounded-full border border-muted-foreground/30 flex justify-center pt-2"
           animate={{ y: [0, 5, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
         >

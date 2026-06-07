@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,15 +15,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio | Creating Cultural Interfaces",
+  title: "Bilal El Amraoui | Software Engineer",
   description:
-    "Architect & Digital Designer crafting immersive experiences at the intersection of technology and culture.",
-  keywords: ["portfolio", "architect", "digital designer", "UI/UX", "creative"],
+    "Software Engineer crafting immersive experiences. Specializing in C#, ASP.NET Core, Next.js, and clean architecture.",
+  keywords: [
+    "Bilal El Amraoui",
+    "software engineer",
+    "portfolio",
+    "Next.js",
+    "ASP.NET Core",
+    "full-stack developer",
+  ],
   openGraph: {
-    title: "Portfolio | Creating Cultural Interfaces",
+    title: "Bilal El Amraoui | Software Engineer",
     description:
-      "Architect & Digital Designer crafting immersive experiences.",
+      "Software Engineer crafting immersive experiences at the intersection of technology and culture.",
     type: "website",
+    url: "https://bilalelamraoui.vercel.app",
   },
 };
 
@@ -31,14 +41,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} dark`}
-      suppressHydrationWarning
-    >
-      <body className="min-h-screen bg-background text-primary antialiased">
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang="en"
+        className={`${geistSans.variable} ${geistMono.variable} dark`}
+        suppressHydrationWarning
+      >
+        <body className="min-h-screen antialiased">
+          <TooltipProvider>{children}</TooltipProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

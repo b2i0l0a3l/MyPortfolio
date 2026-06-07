@@ -1,0 +1,37 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  techStack   String[]
+  githubLink  String?
+  liveLink    String?
+  image       String?
+  category    String   @default("Web Application")
+  featured    Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Certificate {
+  id        String   @id @default(cuid())
+  title     String
+  issuer    String
+  date      DateTime
+  image     String?
+  pdfUrl    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
