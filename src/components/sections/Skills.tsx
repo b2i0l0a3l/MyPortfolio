@@ -66,7 +66,7 @@ const SkillCard = memo(function SkillCard({
 
 export default function Skills() {
   return (
-    <div className="py-24 md:py-32 px-6 md:px-10 lg:px-20 bg-muted/30 border-y border-border">
+    <div className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-10 lg:px-20 bg-muted/30 border-y border-border">
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <div className="flex items-center gap-4 mb-12 md:mb-16">

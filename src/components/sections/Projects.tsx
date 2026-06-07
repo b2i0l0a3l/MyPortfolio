@@ -57,7 +57,7 @@ export default function Projects() {
     : projects.filter(p => p.category === activeTab);
 
   return (
-    <section id="projects" className="py-24 md:py-32 px-6 md:px-10 lg:px-20 relative">
+    <section id="projects" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-10 lg:px-20 relative">
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <div className="flex items-center gap-4 mb-12 md:mb-16">
@@ -79,7 +79,7 @@ export default function Projects() {
 
           {!loading && categories.length > 1 && (
             <Tabs defaultValue="All" className="w-full md:w-auto" onValueChange={setActiveTab}>
-              <TabsList className="bg-muted/50 border border-border rounded-full p-1">
+              <TabsList className="bg-muted/50 border border-border rounded-full p-1 flex-wrap gap-1 h-auto">
                 {categories.map((cat) => (
                   <TabsTrigger
                     key={cat}
@@ -134,7 +134,7 @@ export default function Projects() {
                   )}
                 </div>
 
-                <CardContent className="p-6 flex flex-col flex-1">
+                <CardContent className="p-4 sm:p-6 flex flex-col flex-1">
                   <h3 className="text-xl font-bold mb-2 group-hover:text-accent transition-colors duration-300">
                     {project.title}
                   </h3>

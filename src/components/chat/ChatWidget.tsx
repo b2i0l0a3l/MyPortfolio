@@ -106,10 +106,10 @@ export default function ChatWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end">
       {/* Expanded chat panel */}
       {isOpen && (
-        <Card className="w-[360px] sm:w-[400px] h-[500px] mb-4 flex flex-col shadow-2xl border-border bg-card/95 backdrop-blur-xl animate-fade-in-up">
+        <Card className="w-[calc(100vw-2rem)] sm:w-[400px] h-[calc(100dvh-6rem)] sm:h-[500px] mb-3 sm:mb-4 flex flex-col shadow-2xl border-border bg-card/95 backdrop-blur-xl animate-fade-in-up">
           <CardHeader className="flex flex-row items-center justify-between p-4 border-b border-border/60 bg-muted/30">
             <div className="flex items-center gap-2">
               <div className="size-8 rounded-full bg-accent flex items-center justify-center text-accent-foreground shadow-sm">
@@ -194,7 +194,7 @@ export default function ChatWidget() {
       <Button
         onClick={() => setIsOpen(!isOpen)}
         size="icon"
-        className="size-14 rounded-full bg-accent hover:bg-accent-hover text-accent-foreground shadow-xl shadow-accent/20 transition-all hover:scale-105 active:scale-95 border-0"
+        className="size-12 sm:size-14 rounded-full bg-accent hover:bg-accent-hover text-accent-foreground shadow-xl shadow-accent/20 transition-all hover:scale-105 active:scale-95 border-0"
       >
         {isOpen ? <X className="size-6" /> : <MessageSquare className="size-6" />}
       </Button>

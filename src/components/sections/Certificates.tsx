@@ -46,7 +46,7 @@ export default function Certificates() {
   };
 
   return (
-    <section id="certificates" className="py-24 md:py-32 px-6 md:px-10 lg:px-20 bg-muted/20 border-y border-border relative">
+    <section id="certificates" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-10 lg:px-20 bg-muted/20 border-y border-border relative">
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <div className="flex items-center gap-4 mb-12 md:mb-16">
@@ -59,7 +59,7 @@ export default function Certificates() {
           </h2>
         </div>
 
-        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-16 md:mb-20">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-10 sm:mb-16 md:mb-20">
           CERTIFICATIONS<span className="text-accent">.</span>
         </h2>
 

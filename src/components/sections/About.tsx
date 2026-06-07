@@ -38,12 +38,12 @@ function SectionLabel({ number, title }: { number: string; title: string }) {
 
 export default function About() {
   return (
-    <div className="py-24 md:py-32 px-6 md:px-10 lg:px-20">
+    <div className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-10 lg:px-20">
       <div className="max-w-7xl mx-auto">
         <SectionLabel number="01" title="About Me" />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 mb-20">
-          <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
             {ABOUT_DATA.headline.split(" ").map((word, i) =>
               word === "Software" || word === "Engineer" ? (
                 <span key={i} className="text-accent">

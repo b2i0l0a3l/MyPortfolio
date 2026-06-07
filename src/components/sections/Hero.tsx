@@ -65,7 +65,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center pt-28 pb-10 px-6 md:px-10 lg:px-20 overflow-hidden"
+      className="relative min-h-screen flex flex-col justify-center pt-24 sm:pt-28 pb-8 sm:pb-10 px-4 sm:px-6 md:px-10 lg:px-20 overflow-hidden"
     >
       <ParticleField isDark={theme === "dark"} />
 
@@ -75,7 +75,7 @@ export default function Hero() {
 
       <div className="relative z-10 max-w-7xl mx-auto w-full">
         <motion.p
-          className="text-accent font-mono text-sm md:text-base tracking-wider mb-4 md:mb-6 uppercase"
+          className="text-accent font-mono text-xs sm:text-sm md:text-base tracking-wider mb-3 sm:mb-4 md:mb-6 uppercase"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -83,14 +83,14 @@ export default function Hero() {
           {HERO_DATA.greeting} {HERO_DATA.name}
         </motion.p>
 
-        <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight leading-[0.9] mb-8 md:mb-10">
+        <h1 className="text-[2.5rem] leading-[0.85] sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight sm:leading-[0.9] mb-6 sm:mb-8 md:mb-10">
           {lines.map((line, i) => (
             <AnimatedLine key={i} text={line} lineIndex={i} />
           ))}
         </h1>
 
         <motion.p
-          className="text-muted-foreground text-base md:text-lg lg:text-xl max-w-xl leading-relaxed mb-10 md:mb-12"
+          className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl max-w-xl leading-relaxed mb-8 sm:mb-10 md:mb-12"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.2 }}
@@ -106,7 +106,7 @@ export default function Hero() {
         >
           <Button
             size="lg"
-            className="rounded-full px-8 py-5 bg-accent text-accent-foreground hover:bg-accent-hover shadow-lg shadow-accent/20 gap-2 text-base"
+            className="rounded-full px-6 sm:px-8 py-4 sm:py-5 bg-accent text-accent-foreground hover:bg-accent-hover shadow-lg shadow-accent/20 gap-2 text-sm sm:text-base"
             onClick={() =>
               document
                 .getElementById("projects")

@@ -29,7 +29,7 @@ export default function Contact() {
   };
 
   return (
-    <div id="contact" className="py-24 md:py-32 px-6 md:px-10 lg:px-20 relative">
+    <div id="contact" className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-10 lg:px-20 relative">
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <div className="flex items-center gap-4 mb-12 md:mb-16">
@@ -44,12 +44,12 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24">
           <div>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6">
               {CONTACT_DATA.headline}
               <span className="text-accent">.</span>
             </h2>
 
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-10">
+            <p className="text-muted-foreground text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-10">
               {CONTACT_DATA.description}
             </p>
 
